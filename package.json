@@ -15,7 +15,8 @@
     "render:demo-shorts": "remotion render DemoShorts out/kinnu-demo-shorts-9x16.mp4",
     "test": "vitest run",
     "captions": "tsx scripts/captions.ts",
-    "master-audio": "tsx scripts/master-audio.ts"
+    "master-audio": "tsx scripts/master-audio.ts",
+    "sheet": "tsx scripts/contact-sheet.ts"
   },
   "dependencies": {
     "@remotion/captions": "^4.0.527",
