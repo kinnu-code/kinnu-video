@@ -1,73 +1,195 @@
 # Kinnu product video
 
-Kinnu's product videos, built in code with [Remotion](https://www.remotion.dev).
+Kinnu's product videos, built in code with [Remotion](https://www.remotion.dev) (React, rendered frame by frame to MP4).
 
-- **Product demo** (`src/demo/`): a voiceover-driven walkthrough of the SQE1 app on phone and web, for YouTube (16:9) and Shorts (9:16). Every cut is timed to a spoken word. See [Product demo](#product-demo-youtube--shorts).
-- **Hero / Social / App Store cuts** (`src/scenes/`): the original 60 s beat-sheet video. Beat sheet is data (`src/beats.ts`), formats are data (`src/format.ts`), copy and screenshots per product moment live in `src/Video.tsx`.
+- **Product demo** (`src/demo/`): the main project. A voiceover-driven walkthrough of the SQE1 app on phone and web, rendered for YouTube (16:9) and Shorts (9:16) from one storyboard. Every cut, caption and tap is timed to a spoken word.
+- **Hero / Social / App Store cuts** (`src/scenes/`, `src/Video.tsx`): an earlier 60 s beat-sheet scaffold. Not in active use; see [Older cuts](#older-cuts-hero--social--app-store).
 
-All scenes read colours and fonts from `src/theme.ts`.
+Working with a coding agent? It reads [AGENTS.md](AGENTS.md) (Claude Code reads it via [CLAUDE.md](CLAUDE.md)). This README is the reference it points to.
 
-## Requirements
+## Quick start
 
-- Node 22+ (`npm install`)
-- ffmpeg on the PATH (audio mastering, silence checks)
-- [uv](https://docs.astral.sh/uv/) for the forced aligner, only when re-timing to a new voiceover
+Requirements:
 
-## Run
+- Node 22+ and npm
+- ffmpeg and ffprobe on the PATH (audio mastering, contact sheets, loudness checks)
+- [uv](https://docs.astral.sh/uv/), only when re-timing to a new voiceover (runs the Python forced aligner)
+- macOS or Linux. Fonts load from Google Fonts at render time, so rendering needs network access.
 
-    npm install
-    npm run studio          # live preview at localhost:3000, scrub every frame
-    npm run render:hero     # 1920x1080, 60 s
-    npm run render:social   # 1080x1920, ~28 s
-    npm run render:appstore # placeholder size, check Apple's spec first
+```bash
+npm install
+npm test                # 70+ tests: timings, storyboard invariants, assets, captions, audio levels
+npm run typecheck
+npm run studio          # live preview at localhost:3000, scrub every frame
+npm run render:demo     # -> out/kinnu-demo-youtube-16x9.mp4 (1920x1080, ~20 s to render)
+```
 
-## Before the first real render
+`out/` is git-ignored: renders stay local. The first render downloads Remotion's headless Chrome (~100 MB, once). The Whisper and aligner models are only needed to re-time a new voiceover.
 
-1. Paste Kinnu's design tokens into `src/theme.ts`.
-2. Drop brand fonts into `public/assets/fonts` and enable `src/fonts.ts` (`npm i @remotion/fonts`).
-3. Capture screenshots: `npx playwright install chromium`, log into a seeded demo account once, save storage state, then `KINNU_STORAGE_STATE=state.json npm run capture`.
-4. Replace the placeholder cohort `bins` in `src/components/CohortCurve.tsx` with a real anonymised distribution.
-5. Add firm logo SVGs to `public/assets/logos`.
+## Commands
 
-## Editing the story
+| Command | What it does |
+|---|---|
+| `npm run studio` | Remotion Studio: preview and scrub any composition |
+| `npm run render:demo` | Render the YouTube cut (`DemoYouTube`) to `out/kinnu-demo-youtube-16x9.mp4` |
+| `npm run render:demo-shorts` | Render the Shorts cut (`DemoShorts`) to `out/kinnu-demo-shorts-9x16.mp4` |
+| `npm run captions` | Write `out/kinnu-demo.srt` from the transcript, for uploading to YouTube |
+| `npm run sheet -- <video> <seconds...>` | Contact sheet of frames at those times -> `out/sheet.png` (`--out` to rename) |
+| `npm run transcribe` | Align `src/demo/script.txt` to the voiceover -> `src/demo/transcript.json` |
+| `npm run master-audio` | Master `voiceover.mp3` to -14 LUFS -> `voiceover-master.wav` (what the video plays) |
+| `npm test` / `npm run typecheck` | Vitest suite / `tsc --noEmit` |
+| `cd scripts && uv run --python 3.11 --with pytest pytest test_align_words.py` | Python tests for the aligner helpers |
 
-- Change timings or which beats appear in which cut: `src/beats.ts`.
-- Change a headline or which screenshot a beat uses: `PROOFS` in `src/Video.tsx`.
-- Zoom target for a screenshot: the `zoom` field, x/y are fractions of the image.
+## Repository map
 
-## Product demo (YouTube + Shorts)
+```
+src/
+  Root.tsx              registers every composition (DemoYouTube, DemoShorts, Hero, Social, AppStore)
+  theme.ts              colours and fonts, sampled from the app; every scene reads from here
+  fonts.ts              loads Zilla Slab + Figtree (Google Fonts stand-ins for the brand faces)
+  format.ts             frame sizes: hero 1920x1080, social 1080x1920
+  components/Asset.tsx  <AssetImg>: draws a labelled placeholder instead of crashing on a missing file
+  demo/
+    script.txt          the voiceover script, word for word. Source of truth for timing and captions
+    transcript.json     every word with its start/end in ms (generated by npm run transcribe; don't hand-edit)
+    cues.ts             phrase -> time lookups. CUES.practice = when "practice questions" is spoken
+    storyboard.ts       THE EDIT: screens, taps, captions, device moves, music levels, 16:9 and 9:16 layouts
+    Demo.tsx            assembles the layers; rarely needs changing
+    assets.ts           screen captures by name, with pixel sizes; voiceover and music paths
+    testimonials.ts     quotes (verbatim), faces + mouth positions, firm names, Trustpilot rating
+    motion.ts           time in seconds, easing, keyframed device poses
+    align.ts, srt.ts    forced-alignment glue; .srt caption builder
+    components/         Caption, Devices (phone/browser frames), ScreenTrack (screens, scroll, taps),
+                        FeatureList, LaraSheet, SubjectCloud, Trust (Trustpilot), Testimonials, Brand (logo, end card)
+    *.test.ts           the test suite
+scripts/
+  transcribe.ts         script.txt (or Whisper) + forced aligner -> transcript.json
+  align_words.py        wav2vec2 CTC forced aligner, run through uv
+  master-audio.ts       compressor + gain + limiter to -14 LUFS, re-measured until on target
+  captions.ts           transcript -> .srt
+  contact-sheet.ts      frames at given times -> one image
+public/assets/demo/     voiceover.mp3 (source), voiceover-master.wav (played), music.mp3,
+                        app screenshots (png (3..10).png, svg (2..3).svg), faces/, source screenshots
+```
 
-A voiceover-driven walkthrough of the app on phone and web, rendered as two cuts from one storyboard:
+## How the demo works
 
-    npm run render:demo          # out/kinnu-demo-youtube-16x9.mp4 (1920x1080)
-    npm run render:demo-shorts   # out/kinnu-demo-shorts-9x16.mp4  (1080x1920, Shorts-safe layout)
-    npm run captions             # out/kinnu-demo.srt, upload to YouTube with the video
+```
+script.txt + voiceover.mp3 --npm run transcribe--> transcript.json --> CUES (cues.ts)
+                                                                          |
+voiceover.mp3 --npm run master-audio--> voiceover-master.wav              v
+music.mp3 ----------------------------------------------------> storyboard.ts --> Demo.tsx --> render
+```
 
-Everything lives in `src/demo/`:
+1. **Timing comes from the voice.** `transcript.json` holds every word's start and end. `cues.ts` finds phrases in it (`at("practice questions")`), so the storyboard is written as `CUES.practice - 0.15`, never as `13.51`. A new voiceover re-times the whole edit.
+2. **The storyboard is data.** `storyboard.ts` lists what the phone and browser show and when (`PHONE_STEPS`, `WEB_STEPS`), where the devices sit (`phoneKeys`, `browserKeys` plus the per-orientation `LANDSCAPE` / `PORTRAIT` layouts), the on-screen text (`CAPTIONS`), and the special beats (`TRUST`, `FEATURES`, `SUBJECT_CLOUD`, `END_CARD`, `MUSIC_LEVELS`).
+3. **Both cuts share one storyboard.** Only the layout (positions, type sizes) differs between 16:9 and 9:16.
 
-- `storyboard.ts`: the edit. Which screen shows when, taps, captions, device moves, and the 16:9 / 9:16 layouts.
-- `cues.ts`: turns spoken phrases into times. Cuts are written as `CUES.practice`, never as raw seconds.
-- Music: `public/assets/demo/music.mp3`, levels in `MUSIC_LEVELS` / `musicDbAt` in `storyboard.ts` (bed ~15 dB under the voice, lifts on "Kinnu," and after the last word). Swap the file for another track; re-check that its big hit still lands near the end card.
-- `testimonials.ts`: quotes, faces (cut from the site screenshot) and where each face's mouth is, for the grin; the firm names; the Trustpilot rating.
-- `assets.ts`: the screen captures by name. Swap a placeholder by pointing its entry at a new file (and updating its pixel size).
+Current running order (35 s of voice, 43 s total):
 
-### New voiceover
+| Beat | Voice | On screen |
+|---|---|---|
+| Hook | "With Kinnu, top-tier SQE1 preparation doesn't have to be expensive." | Logo, headline, "expensive" struck through |
+| Trust | "Trusted by trainees at Mishcon, Slaughters and Freshfields, and rated 4.7 on Trustpilot." | Firm names as spoken, Trustpilot stars fill on "4.7" |
+| Walkthrough | "You get expert-reviewed study materials, a personal study path…, and progress you can see…" | Phone rises: Learn, Study Plan, tasks complete; browser joins with Prep Score |
+| Feature run | "Study notes, practice questions, flashcards and an SQE-specific AI tutor" | Each item ticks in; phone taps an answer, a flashcard, Ask LARA |
+| Price | "…all at a price that makes sense." | Caption |
+| Built for SQE1 | "Built specifically for SQE1." | Headline with SQE subject chips |
+| Hero | "Everything you need to prepare seriously, without the ridiculous course fees." | Web + phone together, "ridiculous course fees" struck through |
+| End card | "Kinnu, try it free today." | Logo, CTA, Trustpilot; then the testimonial wall with grinning faces, 7.5 s hold |
 
-1. Replace `public/assets/demo/voiceover.mp3` and put the exact script in `src/demo/script.txt`.
-2. `npm run transcribe` rebuilds `src/demo/transcript.json`: a wav2vec2 forced aligner (`scripts/align_words.py`, run through `uv`) pins each script word to the audio. Without a script.txt (or with `-- --whisper`) local Whisper supplies the words instead; its own timings drift by up to 0.5 s, and it mishears (it heard "Anything" for "Everything"). First run downloads ~450 MB for the aligner (~500 MB more for Whisper).
-3. `npm run master-audio` makes the -14 LUFS copy the video plays (compressor, gain, limiter).
-4. `npm test`. It fails loudly if a phrase the storyboard hangs off is no longer spoken.
-5. `npm run captions` for the updated .srt.
+## Common tasks
 
-Python helper tests: `cd scripts && uv run --python 3.11 --with pytest pytest test_align_words.py`.
+### New voiceover (or script change)
 
-### Placeholders to replace before publishing
+1. Replace `public/assets/demo/voiceover.mp3`.
+2. Put the exact spoken words in `src/demo/script.txt`, spelled and punctuated as they should appear in captions. Commas where the voice pauses make better subtitles.
+3. `npm run transcribe` (first run downloads ~450 MB of aligner model into uv/torch caches). It prints every word with its time: skim it for anything implausible.
+4. `npm run master-audio`.
+5. `npm test`. If a cue phrase is no longer spoken, `cues.ts` throws naming the phrase: update the phrase in `CUES`, or the storyboard beat that uses it.
+6. `npm run render:demo`, then `npm run captions`, then check it (see [Checking a render](#checking-a-render)).
 
-- LARA chat: drawn in code (`components/LaraSheet.tsx`); swap for a real capture.
-- Kinnu mark: redrawn from screenshots (`components/Brand.tsx`); swap for the official SVG.
-- Fonts: Zilla Slab and Figtree stand in for the brand faces (`src/fonts.ts`).
-- The web capture and the Learn session show SAT content; the voiceover is about SQE1.
+Without `script.txt` (or with `npm run transcribe -- --whisper`), local Whisper supplies the words. Avoid this: Whisper's timings drift up to 0.5 s and it mishears (it heard "Anything" for "Everything").
+
+Keep the previous render if it matters: rename it first (e.g. `out/kinnu-demo-youtube-16x9-script1.mp4`), since renders overwrite.
+
+### Change what's on screen at a moment
+
+All in `src/demo/storyboard.ts`:
+
+- **A caption:** add or edit an entry in `CAPTIONS`. `slot` is `"side"` (left column in 16:9), `"center"` or `"top"`. Markup: `*word*` is teal, `~words~` are struck through (give `strike: { start, end }`), a standalone `|` forces a line break.
+- **What the phone shows:** add a step to `PHONE_STEPS`: `{ at, screen, enter, scroll, taps }`. Use `enter: "push"` for navigating to a new screen and `"fade"` for a state change on the same screen (answer revealed, tasks ticked). `scroll` and tap `x`/`y` are in the screenshot's own pixels.
+- **Where a device is:** `phoneKeys` / `browserKeys` move between named poses from the layout; `dur: 0` jumps instantly (only do that while off screen).
+- **Timing:** hang everything off `CUES`. Cuts usually land ~0.15 s before the word; captions ~0.05 s before.
+
+### Swap or add a screenshot
+
+- **Swap:** point the entry in `SCREENS` (`src/demo/assets.ts`) at the new file and update `width`/`height` (a test checks they match the file). Phone captures are 375 px wide at 1x; 1125 px (3x) looks sharper, especially in 9:16.
+- **Add:** add it to `SCREENS`, then use its id in a `PHONE_STEPS` / `WEB_STEPS` step.
+- The web capture has a macOS title bar baked in; `WEB_CHROME_CROP` hides it. A new web capture without one needs that set to 0.
+
+### Music
+
+`public/assets/demo/music.mp3` (ElevenLabs Music, 108 BPM, 43 s). `MUSIC_LEVELS` in `storyboard.ts` sets it in dB: `bed` under the voice (about 15 dB below it), `endCard` from "Kinnu," so the track's hit lands with the logo, `outro` after the last word. A new track needs its big hit checked against `CUES.outro`.
+
+### Testimonials, firms, Trustpilot
+
+`src/demo/testimonials.ts`. Quotes are verbatim from the website; don't edit their wording. Each face's `mouth` (centre and tilt, in the 150 px face image) is where the animated grin is drawn over the original mouth. A new face needs its mouth measured the same way (zoom the image, find the mouth's centre).
+
+### The Shorts cut (9:16)
+
+`npm run render:demo-shorts`. The portrait layout keeps text and taps out of the bottom ~15% and right edge, where YouTube's Shorts UI sits. **Not yet checked for the current script:** the trust beat and testimonial wall have portrait layouts but no one has reviewed a render of them. Check with `npm run sheet -- out/kinnu-demo-shorts-9x16.mp4 7 10.8 36.5 42`.
+
+## Checking a render
+
+Tests catch timing and data mistakes, not visual ones. After any change that affects the picture:
+
+```bash
+npm run render:demo
+npm run sheet -- out/kinnu-demo-youtube-16x9.mp4 2 7 10.8 13 16.5 18 20.3 23.9 27 30 32.4 34.5 36.5 42
+```
+
+Then look at `out/sheet.png` (coding agents can read the image). Good moments to sample: just after each `CUES` entry (print them with `npx tsx -e 'import {CUES} from "./src/demo/cues"; console.log(CUES)'`).
+
+Audio, after changing the voiceover or music:
+
+```bash
+ffmpeg -hide_banner -i out/kinnu-demo-youtube-16x9.mp4 -vn -af ebur128=peak=true -f null - 2>&1 | grep -A20 Summary
+```
+
+Integrated loudness should read about -14 LUFS (YouTube's reference) with peaks below -1 dB.
+
+## Gotchas (learned the hard way)
+
+- **Forgetting `npm run master-audio` after a new voiceover renders the old audio.** A test now fails if `voiceover-master.wav` or `transcript.json` is older than `voiceover.mp3`.
+- **Whisper's word times are unreliable** (up to 0.5 s either way). That's why timing comes from the forced aligner and `script.txt`.
+- **Zilla Slab uses old-style numerals by default**, so "SQE1" reads as "SQEı". `Caption` sets lining figures; any new text in the display font with digits needs `fontVariantNumeric: "lining-nums"`.
+- **`interpolate` throws on `Infinity`.** Components that take an open-ended `to` (end card, trust caption) guard with `Number.isFinite`. Do the same in new ones.
+- **A missing image doesn't crash the render:** `<AssetImg>` draws a dashed "missing: file.png" box. Look for those in the contact sheet.
+- **Slow cross-fades between different screens ghost** (both sets of text visible). State changes use a 0.18 s fade; navigation uses a push.
+- **Text that should hold still while more arrives** (two-line headlines, the firm names) is laid out invisibly from the start, so nothing jumps when the next word lands.
+
+## Open items before publishing
+
+- **LARA chat is a stand-in drawn in code** (`components/LaraSheet.tsx`), including its answer text. Replace with a real capture.
+- **SAT content** in the web capture (`png (10).png`) and the Learn session (`png (7).png`); the video is about SQE1.
+- **Logo** is redrawn from screenshots (`KinnuMark` in `components/Brand.tsx`); swap in the official SVG.
+- **Fonts**: Zilla Slab and Figtree stand in for the brand faces (`src/fonts.ts`).
+- **Trustpilot**: rebuilt from the site widget; "TrustScore 4.7 out of 5" is shown because the voice says it. Check Trustpilot's brand rules, or use their official assets.
+- **Firm names** (Mishcon de Reya, Slaughter and May, Freshfields): confirm we're happy naming them publicly.
+- **Shorts cut** not re-rendered or reviewed for the current script (see above).
+- **Phone screenshots** are 1x (375 px wide); 3x captures would be sharper.
+
+## Older cuts (Hero / Social / App Store)
+
+The first scaffold: a 60 s beat sheet (`src/beats.ts`) with scenes in `src/scenes/` and copy in `PROOFS` in `src/Video.tsx`. It expects screenshots in `public/assets/screens/` (captured with `npm run capture` from a logged-in demo account; see `scripts/capture.ts`, whose page routes are guesses) and firm logos in `public/assets/logos/`. Until those exist it renders placeholder boxes. The cohort curve (`src/components/CohortCurve.tsx`) uses placeholder data.
+
+```bash
+npm run render:hero     # 1920x1080, 60 s
+npm run render:social   # 1080x1920, ~28 s
+npm run render:appstore # placeholder size; check Apple's current spec first
+```
 
 ## Licence
 
-Remotion requires a paid company licence for companies above a small size. Check remotion.dev/license.
+No open-source licence: all rights reserved (it contains Kinnu brand assets, app screenshots and voice/music files). Remotion needs a paid company licence above a small company size: see remotion.dev/license.
