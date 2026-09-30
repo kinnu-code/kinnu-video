@@ -1,0 +1,576 @@
+[
+  {
+    "text": "With",
+    "startMs": 60,
+    "endMs": 260,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " Kinnu,",
+    "startMs": 340,
+    "endMs": 680,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " top-tier",
+    "startMs": 1060,
+    "endMs": 1561,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " SQE1",
+    "startMs": 1701,
+    "endMs": 2361,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " preparation",
+    "startMs": 2401,
+    "endMs": 2981,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " doesn't",
+    "startMs": 3161,
+    "endMs": 3502,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " have",
+    "startMs": 3622,
+    "endMs": 3842,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " to",
+    "startMs": 3882,
+    "endMs": 3982,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " be",
+    "startMs": 4022,
+    "endMs": 4122,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " expensive.",
+    "startMs": 4182,
+    "endMs": 4822,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " Trusted",
+    "startMs": 5262,
+    "endMs": 5623,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " by",
+    "startMs": 5683,
+    "endMs": 5803,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " trainees",
+    "startMs": 5883,
+    "endMs": 6303,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " at",
+    "startMs": 6383,
+    "endMs": 6443,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " Mishcon,",
+    "startMs": 6523,
+    "endMs": 6983,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " Slaughters",
+    "startMs": 7163,
+    "endMs": 7643,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " and",
+    "startMs": 7703,
+    "endMs": 7804,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " Freshfields,",
+    "startMs": 7864,
+    "endMs": 8444,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " and",
+    "startMs": 8704,
+    "endMs": 8844,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " rated",
+    "startMs": 8944,
+    "endMs": 9224,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " 4.7",
+    "startMs": 9324,
+    "endMs": 10145,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " on",
+    "startMs": 10225,
+    "endMs": 10285,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " Trustpilot.",
+    "startMs": 10345,
+    "endMs": 10945,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " You",
+    "startMs": 11285,
+    "endMs": 11385,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " get",
+    "startMs": 11425,
+    "endMs": 11565,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " expert-reviewed",
+    "startMs": 11725,
+    "endMs": 12426,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " study",
+    "startMs": 12506,
+    "endMs": 12786,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " materials,",
+    "startMs": 12826,
+    "endMs": 13366,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " a",
+    "startMs": 13626,
+    "endMs": 13666,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " personal",
+    "startMs": 13746,
+    "endMs": 14186,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " study",
+    "startMs": 14266,
+    "endMs": 14567,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " path",
+    "startMs": 14607,
+    "endMs": 14867,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " built",
+    "startMs": 14927,
+    "endMs": 15107,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " around",
+    "startMs": 15187,
+    "endMs": 15447,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " you,",
+    "startMs": 15527,
+    "endMs": 15707,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " and",
+    "startMs": 16147,
+    "endMs": 16247,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " progress",
+    "startMs": 16307,
+    "endMs": 16768,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " you",
+    "startMs": 16788,
+    "endMs": 16868,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " can",
+    "startMs": 16908,
+    "endMs": 17028,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " see",
+    "startMs": 17108,
+    "endMs": 17288,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " every",
+    "startMs": 17548,
+    "endMs": 17788,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " step",
+    "startMs": 17848,
+    "endMs": 18048,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " of",
+    "startMs": 18108,
+    "endMs": 18168,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " the",
+    "startMs": 18228,
+    "endMs": 18308,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " way.",
+    "startMs": 18328,
+    "endMs": 18528,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " Study",
+    "startMs": 18989,
+    "endMs": 19309,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " notes,",
+    "startMs": 19349,
+    "endMs": 19609,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " practice",
+    "startMs": 19829,
+    "endMs": 20229,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " questions,",
+    "startMs": 20289,
+    "endMs": 20769,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " flashcards",
+    "startMs": 20929,
+    "endMs": 21550,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " and",
+    "startMs": 21750,
+    "endMs": 21870,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " an",
+    "startMs": 21950,
+    "endMs": 22010,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " SQE-specific",
+    "startMs": 22170,
+    "endMs": 23130,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " AI",
+    "startMs": 23270,
+    "endMs": 23491,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " tutor,",
+    "startMs": 23591,
+    "endMs": 23971,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " all",
+    "startMs": 24371,
+    "endMs": 24511,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " at",
+    "startMs": 24571,
+    "endMs": 24651,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " a",
+    "startMs": 24711,
+    "endMs": 24751,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " price",
+    "startMs": 24791,
+    "endMs": 25071,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " that",
+    "startMs": 25091,
+    "endMs": 25211,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " makes",
+    "startMs": 25271,
+    "endMs": 25491,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " sense.",
+    "startMs": 25572,
+    "endMs": 25892,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " Built",
+    "startMs": 26292,
+    "endMs": 26492,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " specifically",
+    "startMs": 26572,
+    "endMs": 27352,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " for",
+    "startMs": 27412,
+    "endMs": 27532,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " SQE1.",
+    "startMs": 27632,
+    "endMs": 28353,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " Everything",
+    "startMs": 28753,
+    "endMs": 29133,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " you",
+    "startMs": 29173,
+    "endMs": 29273,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " need",
+    "startMs": 29333,
+    "endMs": 29533,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " to",
+    "startMs": 29573,
+    "endMs": 29673,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " prepare",
+    "startMs": 29713,
+    "endMs": 30074,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " seriously,",
+    "startMs": 30194,
+    "endMs": 30814,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " without",
+    "startMs": 31014,
+    "endMs": 31354,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " the",
+    "startMs": 31414,
+    "endMs": 31494,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " ridiculous",
+    "startMs": 31534,
+    "endMs": 32194,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " course",
+    "startMs": 32235,
+    "endMs": 32535,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " fees.",
+    "startMs": 32535,
+    "endMs": 32795,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " Kinnu,",
+    "startMs": 33295,
+    "endMs": 33615,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " try",
+    "startMs": 34035,
+    "endMs": 34235,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " it",
+    "startMs": 34315,
+    "endMs": 34395,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " free",
+    "startMs": 34456,
+    "endMs": 34696,
+    "timestampMs": null,
+    "confidence": 1
+  },
+  {
+    "text": " today.",
+    "startMs": 34796,
+    "endMs": 35136,
+    "timestampMs": null,
+    "confidence": 1
+  }
+]

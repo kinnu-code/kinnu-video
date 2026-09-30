@@ -1,0 +1,38 @@
+{
+  "name": "kinnu-video",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "studio": "remotion studio",
+    "render:hero": "remotion render Hero out/hero-16x9.mp4",
+    "render:social": "remotion render Social out/social-9x16.mp4",
+    "render:appstore": "remotion render AppStore out/appstore.mp4",
+    "render:all": "npm run render:hero && npm run render:social && npm run render:appstore",
+    "capture": "tsx scripts/capture.ts",
+    "typecheck": "tsc --noEmit",
+    "transcribe": "tsx scripts/transcribe.ts",
+    "render:demo": "remotion render DemoYouTube out/kinnu-demo-youtube-16x9.mp4",
+    "render:demo-shorts": "remotion render DemoShorts out/kinnu-demo-shorts-9x16.mp4",
+    "test": "vitest run",
+    "captions": "tsx scripts/captions.ts",
+    "master-audio": "tsx scripts/master-audio.ts"
+  },
+  "dependencies": {
+    "@remotion/captions": "^4.0.527",
+    "@remotion/cli": "4.0.527",
+    "@remotion/google-fonts": "^4.0.527",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "remotion": "4.0.527"
+  },
+  "devDependencies": {
+    "@remotion/install-whisper-cpp": "^4.0.527",
+    "@types/node": "^22.20.4",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "playwright": "^1.50.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.2.7"
+  }
+}
